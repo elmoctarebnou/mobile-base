@@ -1,4 +1,4 @@
-export default function getStyles(){
+export default function getStyles() {
     return {
         container: {
             flex: 1,
@@ -6,6 +6,5 @@ export default function getStyles(){
             alignItems: 'center',
             justifyContent: 'center',
         },
-    }
+    };
 }
-

@@ -10,7 +10,7 @@ const Signup = () => {
         <View style={styles.container}>
             <Text>Signup Screen</Text>
         </View>
-    )
-}
+    );
+};
 
-export default Signup
+export default Signup;
