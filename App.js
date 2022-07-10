@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,7 +13,10 @@ import SignIn from './src/screens/signIn/SignIn';
 import SignUp from './src/screens/signUp/SignUp';
 import ConfirmSignUp from './src/screens/confirmSignUp/ConfirmSignUp';
 
-import AuthContext, { AuthContextProvider } from './src/context/AuthContext';
+import {
+    Context as AuthContext,
+    Provider as AuthContextProvider
+} from './src/context/AuthContext';
 
 Amplify.configure(awsconfig);
 
@@ -69,8 +72,13 @@ const Initializing = () => {
 
 const App = () => {
 
-    const { isUserLoggedIn } = useContext(AuthContext);
+    const { state,  checkAuthState } = useContext(AuthContext);
+    const { isUserLoggedIn } = state;
 
+    useEffect(async() => {
+        await checkAuthState()
+        console.log({state})
+    }, [])
 
     return (
         <NavigationContainer>

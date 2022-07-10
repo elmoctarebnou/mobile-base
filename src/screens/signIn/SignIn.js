@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import AuthContext from '../../context/AuthContext';
+import {Context as AuthContext} from '../../context/AuthContext';
 
 import AppTextInput from '../../components/appTextInput/AppTextInput';
 import AppButton from '../../components/appButton/AppButton';
@@ -23,8 +23,8 @@ const SingIn = (props) => {
 
     const styles = StyleSheet.create(getStyles());
 
-    const onSignIn = () => {
-        const error = signIn(username, password)
+    const onSignIn = async () => {
+        const error = await signIn(username, password)
         if (error && error.message) {
             setErrorMessage(error.message);
         }
@@ -53,8 +53,8 @@ const SingIn = (props) => {
                     secureTextEntry
                     textContentType="password"
                 />
-                {errorMessage && <DisplayMessage message='error'/>}
-                <AppButton title="SingIn" onPress={onSignIn} />
+                {errorMessage && <DisplayMessage message={errorMessage}/>}
+                <AppButton title="Sing In" onPress={onSignIn} />
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SignUp')}

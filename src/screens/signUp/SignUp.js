@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import AuthContext from '../../context/AuthContext';
+import { Context as AuthContext } from '../../context/AuthContext';
 
 import AppTextInput from '../../components/appTextInput/AppTextInput';
 import AppButton from '../../components/appButton/AppButton';
@@ -11,6 +11,7 @@ import DisplayMessage from '../../components/displayMessage/DisplayMessage';
 import getStyles from './SignUp.styles';
 
 const SignUp = ({ navigation }) => {
+
     const { signUp } = useContext(AuthContext);
 
     const [username, setUsername] = useState('');

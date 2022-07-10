@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import AuthContext from '../../context/AuthContext';
+import {Context as AuthContext} from '../../context/AuthContext';
 
 import AppTextInput from '../../components/appTextInput/AppTextInput';
 import AppButton from '../../components/appButton/AppButton';
