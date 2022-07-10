@@ -3,15 +3,22 @@ import React, { useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { ActivityIndicator, View } from 'react-native';
+
+import { View } from 'react-native';
+
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 
-import Home from './src/screens/home/Home';
+import Initializing from './src/screens/initializing/Initializing';
 import SignIn from './src/screens/signIn/SignIn';
 import SignUp from './src/screens/signUp/SignUp';
 import ConfirmSignUp from './src/screens/confirmSignUp/ConfirmSignUp';
+import Home from './src/screens/home/Home';
+import Accounts from './src/screens/accounts/Accounts';
+import Profile from './src/screens/profile/Profile';
 
 import {
     Context as AuthContext,
@@ -48,27 +55,45 @@ const AuthenticationNavigator = (props) => {
 };
 
 const AppNavigator = (props) => {
+
     return (
         <Tab.Navigator>
-            <Tab.Screen name='Home'>
-                {(screenProps) => (
-                    <Home
-                        {...screenProps}
-                        updateAuthState={props.updateAuthState}
-                    />
-                )}
-            </Tab.Screen>
+            <Tab.Screen
+                name='Home'
+                component={Home}
+                options={{
+                    tabBarLabel: 'Home',
+                    tabBarIcon: ({ color, size }) => (
+                        <Feather name="home" color={color} size={size} />
+                    ),
+                }}
+            />
+
+            <Tab.Screen
+                name='Accounts'
+                component={Accounts}
+                options={{
+                    tabBarLabel: 'Accounts',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="bank-outline" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name='Profile'
+                component={Profile}
+                options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: ({ color, size }) => (
+                        <Feather name="user" color={color} size={size} />
+                    ),
+                }}
+            />
         </Tab.Navigator>
     );
 };
 
-const Initializing = () => {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" />
-        </View>
-    );
-};
+
 
 const App = () => {
 

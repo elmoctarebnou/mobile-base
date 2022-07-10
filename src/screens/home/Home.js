@@ -12,13 +12,9 @@ const Home = (props) => {
 
     const styles = StyleSheet.create(getStyles());
 
-    const { state, signOut } = useContext(AuthContext);
-    const { isUserLoggedIn } = state; 
-
     return (
         <View style={styles.container}>
-            <Text style={{ fontSize: 30 }}>{isUserLoggedIn}</Text>
-            <AppButton title="Sign Out" onPress={signOut}/>
+            <Text style={{ fontSize: 30 }}>Home</Text>
         </View>
     );
 };
