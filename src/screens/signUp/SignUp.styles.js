@@ -1,4 +1,4 @@
-import { quaternary, tomato, white } from "../../components/constants/colors";
+import { error, quaternary, tomato, white } from "../../components/constants/colors";
 
 export default function getStyles() {
     return {
@@ -25,6 +25,6 @@ export default function getStyles() {
             color: tomato,
             fontSize: 18,
             fontWeight: '600'
-        }
+        },
     };
 }

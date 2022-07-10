@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import getStyles from './AppButton.style';
+import getStyles from './AppButton.styles';
 
 
 const AppButton = (props) => {

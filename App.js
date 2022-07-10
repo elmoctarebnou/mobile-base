@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 
-import { Amplify, Auth } from 'aws-amplify';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { ActivityIndicator, View } from 'react-native';
+
+import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 
-import { ActivityIndicator, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import Home from './src/screens/home/Home';
+import LogIn from './src/screens/logIn/LogIn';
+import SignUp from './src/screens/signUp/SignUp';
+import ConfirmSignUp from './src/screens/confirmSignUp/ConfirmSignUp';
 
-import Landing from './src/screens/landing/Landing';
-import ClientHome from './src/screens/client-home/ClientHome';
-import LogIn from './src/screens/log-in/LogIn';
-import SignUp from './src/screens/sign-up/SignUp';
-import ConfirmSignUp from './src/screens/confirm-sign-up/ConfirmSignUp';
+import AuthContext, { AuthContextProvider } from './src/context/AuthContext';
 
 Amplify.configure(awsconfig);
 
+
 const AuthenticationStack = createStackNavigator();
-const AppStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const AuthenticationNavigator = (props) => {
-
-
     return (
         <AuthenticationStack.Navigator headerMode="none">
             <AuthenticationStack.Screen name="LogIn">
@@ -42,65 +43,48 @@ const AuthenticationNavigator = (props) => {
         </AuthenticationStack.Navigator>
     );
 };
+
 const AppNavigator = (props) => {
     return (
-        <AppStack.Navigator>
-            <AppStack.Screen name="ClientHome">
+        <Tab.Navigator>
+            <Tab.Screen name='Home'>
                 {(screenProps) => (
-                    <ClientHome
+                    <Home
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />
                 )}
-            </AppStack.Screen>
-        </AppStack.Navigator>
+            </Tab.Screen>
+        </Tab.Navigator>
     );
 };
 
 const Initializing = () => {
     return (
-        <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-            <ActivityIndicator size="large" color="tomato" />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" />
         </View>
     );
 };
 
 const App = () => {
 
-    const [isUserLoggedIn, setUserLoggedIn] = useState('initializing');
-
-    useEffect(() => {
-        checkAuthState();
-    });
-
-    const checkAuthState = async () => {
-        try {
-            await Auth.currentAuthenticatedUser();
-            console.log('✅ User is signed in');
-            setUserLoggedIn('loggedIn');
-        } catch (err) {
-            console.log('❌ User is not signed in');
-            setUserLoggedIn('loggedOut');
-        }
-    };
-    function updateAuthState(isUserLoggedIn) {
-        setUserLoggedIn(isUserLoggedIn);
-    }
+    const { isUserLoggedIn } = useContext(AuthContext);
 
 
     return (
         <NavigationContainer>
             {isUserLoggedIn === 'initializing' && <Initializing />}
-            {isUserLoggedIn === 'loggedIn' && (
-                <AppNavigator updateAuthState={updateAuthState} />
-            )}
-            {isUserLoggedIn === 'loggedOut' && (
-                <AuthenticationNavigator updateAuthState={updateAuthState} />
-            )}
+            {isUserLoggedIn === 'loggedIn' && <AppNavigator/>}
+            {isUserLoggedIn === 'loggedOut' && <AuthenticationNavigator/>}
         </NavigationContainer>
     );
 };
 
-export default App;
+export default () => {
+    return (
+        <AuthContextProvider>
+            <App/>
+        </AuthContextProvider>
+    )
+}

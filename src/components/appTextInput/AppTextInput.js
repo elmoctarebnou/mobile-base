@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { primary } from '../constants/colors';
 
-import getStyles from './AppTextInput.style';
+import getStyles from './AppTextInput.styles';
 
 const AppTextInput = (props) => {
 

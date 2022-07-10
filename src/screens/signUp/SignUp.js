@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Auth } from 'aws-amplify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import AppTextInput from '../../components/app-text-input/AppTextInput';
-import AppButton from '../../components/app-button/AppButton';
+import AuthContext from '../../context/AuthContext';
 
-import getStyles from './SignUp.style';
+import AppTextInput from '../../components/appTextInput/AppTextInput';
+import AppButton from '../../components/appButton/AppButton';
+import DisplayMessage from '../../components/displayMessage/DisplayMessage';
 
+import getStyles from './SignUp.styles';
 
-const SignUp = (props) => {
-
-    const { navigation } = props;
+const SignUp = ({ navigation }) => {
+    const { signUp } = useContext(AuthContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const styles = StyleSheet.create(getStyles());
 
-    const signUp = async () => {
-        try {
-            await Auth.signUp({ username, password, attributes: { email } });
-            console.log('✅ Sign-up Confirmed');
-            navigation.navigate('ConfirmSignUp');
-        } catch (error) {
-            console.log('❌ Error signing up...', error);
-        }
-    }
+    const onSignUp = async () => {
+        const error = await signUp(username, password, email);
+        if (error && error.message) setErrorMessage(error.message);
+        else navigation.navigate('ConfirmSignUp');
+    };
 
     return (
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -61,7 +58,8 @@ const SignUp = (props) => {
                     keyboardType="email-address"
                     textContentType="emailAddress"
                 />
-                <AppButton title="Sign Up" onPress={signUp} />
+                {errorMessage && <DisplayMessage message={errorMessage}/>}
+                <AppButton title="Sign Up" onPress={onSignUp} />
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('LogIn')}

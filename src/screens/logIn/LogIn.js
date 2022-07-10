@@ -1,32 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Auth } from 'aws-amplify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import AppTextInput from '../../components/app-text-input/AppTextInput';
-import AppButton from '../../components/app-button/AppButton';
+import AuthContext from '../../context/AuthContext';
 
-import getStyles from './LogIn.style';
+import AppTextInput from '../../components/appTextInput/AppTextInput';
+import AppButton from '../../components/appButton/AppButton';
+import DisplayMessage from '../../components/displayMessage/DisplayMessage';
+
+import getStyles from './LogIn.styles';
 
 
 const LogIn = (props) => {
 
-    const { navigation, updateAuthState } = props;
+    const { logIn } = useContext(AuthContext);
+
+    const { navigation } = props;
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const styles = StyleSheet.create(getStyles());
 
-    const logIn = async () => {
-        try {
-            await Auth.signIn(username, password);
-            console.log('✅ Success');
-            updateAuthState('loggedIn');
-        } catch (error) {
-            console.log('❌ Error loging in...', error);
+    const onLogin = () => {
+        const error = logIn(username, password)
+        if (error && error.message) {
+            setErrorMessage(error.message);
         }
     }
+
     return (
         <SafeAreaView style={styles.safeAreaContainer}>
             <View style={styles.container}>
@@ -50,7 +53,7 @@ const LogIn = (props) => {
                     secureTextEntry
                     textContentType="password"
                 />
-                <AppButton title="Login" onPress={logIn} />
+                <AppButton title="Login" onPress={onLogin} />
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SignUp')}

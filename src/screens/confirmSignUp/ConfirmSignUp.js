@@ -6,21 +6,28 @@ import AuthContext from '../../context/AuthContext';
 
 import AppTextInput from '../../components/appTextInput/AppTextInput';
 import AppButton from '../../components/appButton/AppButton';
+import DisplayMessage from '../../components/displayMessage/DisplayMessage';
 
-import getStyles from './ConfirmSignUp.style';
+import getStyles from './ConfirmSignUp.styles';
 
 
 const ConfirmSignUp = (props) => {
 
-    const { confirmSignUp } = useContext(AuthContext);
+    const { navigation } = props;
 
     const [username, setUsername] = useState('');
     const [authCode, setAuthCode] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const styles = StyleSheet.create(getStyles());
 
+    const { confirmSignUp } = useContext(AuthContext);
+
     const onConfirmSignUp = () => {
-        confirmSignUp(username, authCode);
+        const error = confirmSignUp(username, authCode);
+        console.log({error, username, authCode})
+        if (error && error.message) setErrorMessage(error.message);
+        else navigation.navigate('LogIn');
     };
 
 
@@ -44,6 +51,7 @@ const ConfirmSignUp = (props) => {
                     placeholder="Enter verification code"
                     keyboardType="numeric"
                 />
+                {errorMessage && <DisplayMessage message={errorMessage}/>}
                 <AppButton title="Confirm Sign Up" onPress={onConfirmSignUp} />
             </View>
         </SafeAreaView>

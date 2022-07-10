@@ -1,3 +1,5 @@
+import { lightBlue, primary } from "../constants/colors";
+
 export default function getStyles() {
     return {
         button: {
@@ -7,7 +9,7 @@ export default function getStyles() {
             alignItems: 'center',
             padding: 15,
             width: '80%',
-            backgroundColor: 'tomato'
+            backgroundColor: lightBlue 
         },
         buttonText: {
             color: 'white',
