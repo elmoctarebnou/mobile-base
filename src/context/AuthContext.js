@@ -1,8 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext, useReducer  } from 'react';
 
 import { Auth } from 'aws-amplify';
 
-const AuthContext = React.createContext()
+const AuthContext = createContext()
+
+const authReducer = (state, action) => {
+    switch (action.type) {
+        case 'signUp':
+            return 
+
+        case 'confirmSignUp':
+            return 
+
+        case 'signIn':
+            return 
+
+        case 'signOut':
+            return 
+    }
+
+}
 
 export const AuthContextProvider = (props) => {
 
@@ -20,6 +37,7 @@ export const AuthContextProvider = (props) => {
             const user = await Auth.currentAuthenticatedUser();
             console.log(user)
             console.log('✅ User is signed in');
+            setUserLoggedIn('loggedIn');
         } catch (err) {
             console.log('❌ User is not signed in');
             setUserLoggedIn('loggedOut');
@@ -45,26 +63,6 @@ export const AuthContextProvider = (props) => {
         }
     }
 
-    const signOut = async () => {
-        try {
-            await Auth.signOut();
-            updateAuthState('loggedOut');
-        } catch (error) {
-            console.log('Error signing out: ', error);
-        }
-    }
-
-    const logIn = async (username, password) => {
-        try {
-            await Auth.signIn(username, password);
-            console.log('✅ Success');
-            updateAuthState('loggedIn');
-        } catch (error) {
-            console.log('❌ Error loging in...', error);
-            return error
-        }
-    }
-
     const confirmSignUp = async (username, authCode) => {
         try {
             await Auth.confirmSignUp(username, authCode);
@@ -79,6 +77,27 @@ export const AuthContextProvider = (props) => {
         }
     };
 
+    const signIn = async (username, password) => {
+        try {
+            await Auth.signIn(username, password);
+            console.log('✅ Success');
+            updateAuthState('loggedIn');
+        } catch (error) {
+            console.log('❌ Error singin in...', error);
+            return error
+        }
+    }
+
+    const signOut = async () => {
+        try {
+            await Auth.signOut();
+            updateAuthState('loggedOut');
+        } catch (error) {
+            console.log('Error signing out: ', error);
+        }
+    }
+
+
     return (
         <AuthContext.Provider
             value={{
@@ -86,7 +105,7 @@ export const AuthContextProvider = (props) => {
                 signUp,
                 confirmSignUp,
                 signOut,
-                logIn,
+                signIn,
             }}
         >
             {children}

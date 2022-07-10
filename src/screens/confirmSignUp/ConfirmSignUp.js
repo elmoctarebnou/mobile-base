@@ -27,7 +27,7 @@ const ConfirmSignUp = (props) => {
         const error = confirmSignUp(username, authCode);
         console.log({error, username, authCode})
         if (error && error.message) setErrorMessage(error.message);
-        else navigation.navigate('LogIn');
+        else navigation.navigate('SignIn');
     };
 
 

@@ -9,7 +9,7 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 
 import Home from './src/screens/home/Home';
-import LogIn from './src/screens/logIn/LogIn';
+import SignIn from './src/screens/signIn/SignIn';
 import SignUp from './src/screens/signUp/SignUp';
 import ConfirmSignUp from './src/screens/confirmSignUp/ConfirmSignUp';
 
@@ -24,9 +24,9 @@ const Tab = createBottomTabNavigator();
 const AuthenticationNavigator = (props) => {
     return (
         <AuthenticationStack.Navigator headerMode="none">
-            <AuthenticationStack.Screen name="LogIn">
+            <AuthenticationStack.Screen name="SignIn">
                 {(screenProps) => (
-                    <LogIn
+                    <SignIn
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />

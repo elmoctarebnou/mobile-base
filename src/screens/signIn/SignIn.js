@@ -8,12 +8,12 @@ import AppTextInput from '../../components/appTextInput/AppTextInput';
 import AppButton from '../../components/appButton/AppButton';
 import DisplayMessage from '../../components/displayMessage/DisplayMessage';
 
-import getStyles from './LogIn.styles';
+import getStyles from './SignIn.styles';
 
 
-const LogIn = (props) => {
+const SingIn = (props) => {
 
-    const { logIn } = useContext(AuthContext);
+    const { signIn } = useContext(AuthContext);
 
     const { navigation } = props;
 
@@ -23,8 +23,8 @@ const LogIn = (props) => {
 
     const styles = StyleSheet.create(getStyles());
 
-    const onLogin = () => {
-        const error = logIn(username, password)
+    const onSignIn = () => {
+        const error = signIn(username, password)
         if (error && error.message) {
             setErrorMessage(error.message);
         }
@@ -53,7 +53,8 @@ const LogIn = (props) => {
                     secureTextEntry
                     textContentType="password"
                 />
-                <AppButton title="Login" onPress={onLogin} />
+                {errorMessage && <DisplayMessage message='error'/>}
+                <AppButton title="SingIn" onPress={onSignIn} />
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SignUp')}
@@ -68,4 +69,4 @@ const LogIn = (props) => {
     );
 };
 
-export default LogIn;
+export default SingIn;

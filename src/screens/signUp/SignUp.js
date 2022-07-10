@@ -62,7 +62,7 @@ const SignUp = ({ navigation }) => {
                 <AppButton title="Sign Up" onPress={onSignUp} />
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('LogIn')}
+                        onPress={() => navigation.navigate('SignIn')}
                     >
                         <Text style={styles.forgotPasswordButtonText}>
                             Already have an account? Log In
