@@ -27,9 +27,11 @@ const ${COMPONENT_NAME} = (props) => {
     const styles = StyleSheet.create(getStyles());
 
     return (
-        <div className={classes.column}>
-            ${COMPONENT_NAME}
-        </div>
+        <View style={styles.screen}>
+            <Text>
+                ${COMPONENT_NAME}
+            </Text>
+        </View>
     )
 };
 export default ${COMPONENT_NAME};
@@ -42,13 +44,16 @@ import { white } from "../../components/constants/colors";
 export default function getStyles() {
     return {
         row: {
-            display: 'flex',
             flexDirection: 'row'
         },
         column: {
-            display: 'flex',
             flexDirection: 'column'
         },
+        screen: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+        }
     };
 };
 EOM

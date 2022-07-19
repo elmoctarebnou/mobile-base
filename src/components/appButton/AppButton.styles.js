@@ -1,4 +1,4 @@
-import { lightBlue, primary } from "../constants/colors";
+import { lightBlue, primary, secondary } from "../constants/colors";
 
 export default function getStyles() {
     return {
@@ -8,8 +8,8 @@ export default function getStyles() {
             justifyContent: 'center',
             alignItems: 'center',
             padding: 15,
-            width: '80%',
-            backgroundColor: lightBlue 
+            width: '90%',
+            backgroundColor: primary
         },
         buttonText: {
             color: 'white',

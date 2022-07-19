@@ -1,15 +1,18 @@
 
-import { white } from "../../components/constants/colors";
+import { white } from "../constants/colors";
 
 export default function getStyles() {
     return {
         row: {
-            display: 'flex',
             flexDirection: 'row'
         },
         column: {
-            display: 'flex',
             flexDirection: 'column'
         },
+        screen: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+        }
     };
 };

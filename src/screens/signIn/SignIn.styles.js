@@ -1,4 +1,4 @@
-import { quaternary, tomato, white } from "../../components/constants/colors";
+import { quaternary, secondary, tomato, white } from "../../components/constants/colors";
 
 export default function getStyles() {
     return {
@@ -9,6 +9,9 @@ export default function getStyles() {
         container: {
             flex: 1,
             alignItems: 'center',
+        },
+        logo: {
+
         },
         title: {
             fontSize: 20,
@@ -22,7 +25,7 @@ export default function getStyles() {
             alignItems: 'center',
         },
         forgotPasswordButtonText: {
-            color: tomato,
+            color: secondary,
             fontSize: 18,
             fontWeight: '600',
         },
